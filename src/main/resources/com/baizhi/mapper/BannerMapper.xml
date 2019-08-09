@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.baizhi.dao.BannerDao">
+    <insert id="InsertBanner">
+        insert into cmfz_banner(id, title, description, status, up_date, img_path)values(#{id}, #{title}, #{description}, #{status}, #{up_date}, #{img_path})
+    </insert>
+
+    <update id="UpdateById">
+        update cmfz_banner
+        <set>
+            <if test="title!=null">
+                title=#{title},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="description!=null">
+                description=#{description},
+            </if>
+            <if test="img_path!=null">
+                img_path=#{img_path}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="SelectAll" resultType="Banner">
+        select id, title, description, status, up_date, img_path from cmfz_banner limit ${(page-1)*rows},#{rows}
+    </select>
+
+    <select id="SelectTotalCount" resultType="int">
+        select count(*) from cmfz_banner
+    </select>
+
+    <select id="SelectById" resultType="Banner">
+        select * from cmfz_banner where id=#{id}
+    </select>
+
+    <delete id="DelectById">
+        delete from cmfz_banner where id=#{id}
+    </delete>
+
+</mapper>

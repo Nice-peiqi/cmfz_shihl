@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.baizhi.dao.UserDao">
+    <sql id="Sql">
+        id, phone, password, salt, pic_img, ahama, name, sex, city, sign, status, reg_date, guru_ld
+    </sql>
+
+    <select id="SelectByPage" resultType="User">
+        select <include refid="Sql"/> from cmfz_user limit #{start},#{rows}
+    </select>
+
+    <update id="Update">
+        update cmfz_user
+        <set>
+            <if test="status!=null">
+                status=#{status}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="SelectBYTotal" resultType="Integer">
+        select count(*) from cmfz_user
+    </select>
+
+    <select id="SelectAll" resultType="User">
+        select <include refid="Sql"/> from cmfz_user
+    </select>
+
+    <select id="SelectByMonth" resultType="Integer">
+        select count(*) from cmfz_user where reg_date like  #{month} and sex=#{sex}
+    </select>
+
+    <select id="SelectByCity" resultType="City">
+        select city as name,count(*) as value from cmfz_user where sex=#{sex} GROUP BY city
+    </select>
+
+    <insert id="Insert">
+        insert into cmfz_user (<include refid="Sql"/>) values (#{id}, #{phone}, #{password}, #{salt}, #{pic_img}, #{ahama}, #{name}, #{sex}, #{city}, #{sign}, #{status}, #{reg_date}, #{guru_ld})
+    </insert>
+</mapper>

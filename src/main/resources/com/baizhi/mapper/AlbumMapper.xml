@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.baizhi.dao.AlbumDao">
+    <sql id="Sql">
+        id, title, author, score, cover_img, broadcast, count, centent, pub_date
+    </sql>
+
+    <insert id="Insert">
+        insert into cmfz_album (<include refid="Sql"/>) values (#{id}, #{title}, #{author}, #{score}, #{cover_img}, #{broadcast}, #{count}, #{centent}, #{pub_date})
+    </insert>
+
+    <delete id="Delete">
+        delete from cmfz_album where id=#{id}
+    </delete>
+
+    <update id="Update">
+        update cmfz_album
+        <set>
+            <if test="title!=null">
+                title=#{title},
+            </if>
+            <if test="author!=null">
+                author=#{author},
+            </if>
+            <if test="broadcast!=null">
+                broadcast=#{broadcast},
+            </if>
+            <if test="count!=null">
+                count=#{count},
+            </if>
+            <if test="centent!=null">
+                centent=#{centent},
+            </if>
+            <if test="cover_img!=null">
+                cover_img=#{cover_img}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="SelectByPage" resultType="Album">
+        select <include refid="Sql"/> from cmfz_album limit #{start},#{rows}
+    </select>
+
+    <select id="SelectBYTotal" resultType="int">
+        select count(*) from cmfz_album
+    </select>
+
+    <select id="SelectOne" resultType="Album">
+        select count from cmfz_album where id=#{id}
+    </select>
+</mapper>
