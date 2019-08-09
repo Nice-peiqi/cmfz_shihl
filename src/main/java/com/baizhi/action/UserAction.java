@@ -28,7 +28,7 @@ public class UserAction {
 
     @RequestMapping("showPage")
     @ResponseBody
-    public Map<String, Object> SeveByPage(Integer page, Integer rows) throws Exception {
+    public Map<String, Object> SeveByPage(Integer page, Integer rows) throws Exception {//测试git
         Map<String, Object> map = userService.QueryByPage(page, rows);
         return map;
     }
